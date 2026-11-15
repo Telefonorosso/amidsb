@@ -8,14 +8,15 @@ This README covers the hardware-validated **PORT39 INTERACTIVE FIX1** release an
 
 ## Requirements
 
-- AmigaOS 68k with a sufficiently fast CPU (tested on **Amiga 600 + PiStorm / Emu68**).
-- **Poseidon 6.2** USB stack and a working high-speed USB connection.
-- RTL2832U-based SDR with R820T/R820T2-class tuner. **Hardware-validated dongle:** Nooelec NESDR SMArt, USB ID `0BDA:2838`. The current driver requires that USB ID and tuner ID `0x69`; other models are **not yet validated**.
-- An antenna suitable for **1090 MHz ADS-B** reception.
-- For `RTLINTERACTIVE`: a normal AmigaOS ANSI/CSI console, preferably **96+ columns** wide.
-- For `RTLBEAST` only: a running AmigaOS TCP/IP stack providing `bsdsocket.library` (hardware-tested with MiamiDX) and LAN connectivity.
-
-The receiver runs at **1090 MHz / 2.4 Msps**. These parameters are fixed in this release.
+- **AmigaOS 68k** with a sufficiently fast CPU. Hardware-tested on **Amiga 600 + PiStorm / Emu68 (Raspberry Pi 3A+)**.
+- **Poseidon 6.2** USB stack, properly installed and configured.
+- **`dwc2usb.device`** USB host controller driver for PiStorm.
+- **RTL-SDR USB dongle** based on RTL2832U and an R820T/R820T2-class tuner.
+  - Hardware-validated: **Nooelec NESDR SMArt**, USB VID:PID `0BDA:2838`, tuner ID `0x69`.
+  - The current backend requires these identifiers. Other dongles are not yet validated.
+- **1090 MHz ADS-B antenna** connected to the SDR dongle.
+- **TCP/IP stack with `bsdsocket.library`** for `RTLBEAST` only. Hardware-tested with MiamiDX. A working LAN connection is required to reach the Beast TCP server on port `30005`.
+- **Recommended AmigaDOS stack:** `262144` bytes (`Stack 262144` before launching the executable).
 
 ## Install and run
 
@@ -23,7 +24,7 @@ Copy the native Amiga executable `READSB_PORT39F1` to your Amiga and open a Shel
 
 ```text
 Stack 262144
-READSB_PORT39F1 RTLINTERACTIVE
+AMIDSB RTLINTERACTIVE
 ```
 
 **`GAIN=AUTO` is already the default**; you do not need to specify it.
@@ -35,7 +36,7 @@ Press **Ctrl-C** to stop. The program releases the SDR and restores the console'
 ### `RFSET` — check the receiver
 
 ```text
-READSB_PORT39F1 RFSET
+AMIDSB RFSET
 ```
 
 Initializes the RTL2832U and R82xx tuner, configures 1090 MHz / 2.4 Msps, and checks PLL lock. Inspect the `[USB]`, `[BIND]`, and `[RF]` messages for errors and `pll_lock=1`.
@@ -45,7 +46,7 @@ Initializes the RTL2832U and R82xx tuner, configures 1090 MHz / 2.4 Msps, and ch
 ### `RTLINTERACTIVE` — standalone aircraft table
 
 ```text
-READSB_PORT39F1 RTLINTERACTIVE
+AMIDSB RTLINTERACTIVE
 ```
 
 Receives and decodes ADS-B locally and displays a continuously updated aircraft table with ICAO addresses, callsigns, squawks, altitudes, speeds, headings, positions, RSSI, message counts, and `Seen` (seconds since the last received message).
@@ -59,7 +60,7 @@ Receives and decodes ADS-B locally and displays a continuously updated aircraft 
 ### `RTLBEAST` — Beast TCP server
 
 ```text
-READSB_PORT39F1 RTLBEAST
+AMIDSB RTLBEAST
 ```
 
 Receives and decodes ADS-B, then serves binary Beast-format messages to **one TCP client** on **port 30005** (listens on `0.0.0.0`). This is a streaming mode, **not** the local interactive aircraft table.
@@ -81,10 +82,10 @@ The server does not require a username or password. **Use it on a trusted LAN; d
 Gain is an **optional second argument** after any of the three commands:
 
 ```text
-READSB_PORT39F1 RTLINTERACTIVE GAIN=AUTO
-READSB_PORT39F1 RTLINTERACTIVE GAIN=30
-READSB_PORT39F1 RTLBEAST GAIN=40.5
-READSB_PORT39F1 RFSET GAIN=30
+AMIDSB RTLINTERACTIVE GAIN=AUTO
+AMIDSB RTLINTERACTIVE GAIN=30
+AMIDSB RTLBEAST GAIN=40.5
+AMIDSB RFSET GAIN=30
 ```
 
 | Setting | Behavior |
@@ -96,8 +97,6 @@ READSB_PORT39F1 RFSET GAIN=30
 | `GAIN=0` through `GAIN=49.6` | Manual gain accepted by the parser, in dB, with at most one decimal digit |
 
 The tuner driver maps a requested manual gain to its supported hardware settings; not every intermediate value is necessarily applied exactly. Use uppercase `GAIN=`. `GAIN=auto` also works.
-
-**Do not use `GAIN=-10`:** that is Linux readsb's AGC convention, not a valid argument for this Amiga build. Use `GAIN=AUTO` instead.
 
 The original readsb DSP preamble threshold (**58**) remains unchanged in this release.
 
@@ -141,6 +140,5 @@ Special thanks to the Amiga development community for its documentation, tools a
 
 ### Licensing
 
-readsb-Amiga is distributed under **GNU GPL v3 or later**, subject to the copyright notices and applicable licenses of the incorporated upstream components.
-
+AMIDSB is distributed under **GNU GPL v3 or later**, subject to the copyright notices and applicable licenses of the incorporated upstream components.
 All original copyright notices and license files must be preserved when redistributing the source code or binaries.
