@@ -18,7 +18,7 @@ Receive and track aircraft directly in an AmigaOS console, **without Linux, ncur
 
 ## Install and run
 
-Copy the native Amiga executable `READSB_PORT39F1` to your Amiga and open a Shell:
+Copy the native Amiga executable `AMIDSB` to your Amiga and open a Shell:
 
 ```text
 Stack 262144
@@ -34,6 +34,7 @@ Press **Ctrl-C** to stop. The program releases the SDR and restores the console'
 ### `RFSET` — check the receiver
 
 ```text
+Stack 262144
 AMIDSB RFSET
 ```
 
@@ -44,6 +45,7 @@ Initializes the RTL2832U and R82xx tuner, configures 1090 MHz / 2.4 Msps, and ch
 ### `RTLINTERACTIVE` — standalone aircraft table
 
 ```text
+Stack 262144
 AMIDSB RTLINTERACTIVE
 ```
 
@@ -58,6 +60,7 @@ Receives and decodes ADS-B locally and displays a continuously updated aircraft 
 ### `RTLBEAST` — Beast TCP server
 
 ```text
+Stack 262144
 AMIDSB RTLBEAST
 ```
 
@@ -80,6 +83,7 @@ The server does not require a username or password. **Use it on a trusted LAN; d
 Gain is an **optional second argument** after any of the three commands:
 
 ```text
+Stack 262144
 AMIDSB RTLINTERACTIVE GAIN=AUTO
 AMIDSB RTLINTERACTIVE GAIN=30
 AMIDSB RTLBEAST GAIN=40.5
