@@ -4,15 +4,13 @@
 
 Receive and track aircraft directly in an AmigaOS console, **without Linux, ncurses, or an Internet connection**, or send decoded Mode S / ADS-B messages to another receiver over Beast TCP.
 
-This README covers the hardware-validated **PORT39 INTERACTIVE FIX1** release and only its three primary RF commands: `RFSET`, `RTLINTERACTIVE`, and `RTLBEAST`.
-
 ## Requirements
 
 - **AmigaOS 68k** with a sufficiently fast CPU. Hardware-tested on **Amiga 600 + PiStorm / Emu68 (Raspberry Pi 3A+)**.
 - **Poseidon 6.2** USB stack, properly installed and configured.
 - **`dwc2usb.device`** USB host controller driver for PiStorm.
 - **RTL-SDR USB dongle** based on RTL2832U and an R820T/R820T2-class tuner.
-  - Hardware-validated: **Nooelec NESDR SMArt**, USB VID:PID `0BDA:2838`, tuner ID `0x69`.
+  - Hardware-validated: **Nooelec NESDR SMArt**, USB VID:PID `0BDA:2838`
   - The current backend requires these identifiers. Other dongles are not yet validated.
 - **1090 MHz ADS-B antenna** connected to the SDR dongle.
 - **TCP/IP stack with `bsdsocket.library`** for `RTLBEAST` only. Hardware-tested with MiamiDX. A working LAN connection is required to reach the Beast TCP server on port `30005`.
