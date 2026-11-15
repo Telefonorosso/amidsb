@@ -1,4 +1,4 @@
-# readsb-Amiga
+# amidsb - AI CODED
 
 **Native ADS-B receiver for AmigaOS 68k, using an RTL-SDR dongle and Poseidon USB.**
 
@@ -125,4 +125,22 @@ The native executable is `dist/READSB_PORT39F1`. Copy that file to the Amiga. Th
 | Linux cannot connect to Beast | TCP/IP stack active on Amiga, correct LAN IP, port 30005 reachable, and no existing Beast client |
 | No latitude/longitude yet | Wait for enough valid airborne CPR messages from the same aircraft |
 
-**Validation:** PORT39 INTERACTIVE FIX1 has been tested on real Amiga 600 / PiStorm / Emu68 hardware, including the local interactive display and Beast TCP mode. This does not imply validation of every RTL-SDR dongle or every TCP/IP stack.
+## Credits and Acknowledgements
+
+**readsb-Amiga** builds upon the work of several open-source projects and their contributors:
+
+- **[wiedehopf/readsb](https://github.com/wiedehopf/readsb)** — Original ADS-B/Mode S decoder, demodulation algorithms, message processing, CPR decoding and aircraft tracking. Special thanks to Matthias Wirth (*wiedehopf*) and the readsb contributors.
+- **[dump1090](https://github.com/antirez/dump1090)** — Original work by Salvatore Sanfilippo, on which subsequent dump1090 and readsb developments are based.
+- **[MalcolmRobb/dump1090](https://github.com/MalcolmRobb/dump1090)** and **[FlightAware/dump1090](https://github.com/flightaware/dump1090)** — Important contributions to the evolution of Mode S/ADS-B decoding.
+- **[Osmocom rtl-sdr](https://github.com/osmocom/rtl-sdr)** — RTL2832U and Rafael R82xx tuner control code.
+- **Poseidon USB Stack** — Native AmigaOS USB infrastructure enabling direct access to RTL-SDR hardware.
+- **[amiport](https://github.com/bdgscotland/amiport)** — POSIX compatibility infrastructure supporting native AmigaOS software ports.
+- **[PiStorm](https://github.com/captain-amygdala/pistorm)** and **[Emu68](https://github.com/michalsc/Emu68)** — Hardware and emulation technologies making this project practical on classic Amiga computers.
+
+Special thanks to the Amiga development community for its documentation, tools and continued support of classic hardware.
+
+### Licensing
+
+readsb-Amiga is distributed under **GNU GPL v3 or later**, subject to the copyright notices and applicable licenses of the incorporated upstream components.
+
+All original copyright notices and license files must be preserved when redistributing the source code or binaries.
