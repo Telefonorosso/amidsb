@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="cover.jpg" alt="this shouldnt exist">
+</p>
+
 # amidsb - AI CODED
 
 **Native ADS-B receiver for AmigaOS 68k, using an RTL-SDR dongle and Poseidon USB.**
