@@ -132,7 +132,7 @@ The native executable is `dist/READSB_PORT39F1`. Copy that file to the Amiga. Th
 
 ## Credits and Acknowledgements
 
-**readsb-Amiga** builds upon the work of several open-source projects and their contributors:
+**AMIDSB** builds upon the work of several open-source projects and their contributors:
 
 - **[wiedehopf/readsb](https://github.com/wiedehopf/readsb)** — Original ADS-B/Mode S decoder, demodulation algorithms, message processing, CPR decoding and aircraft tracking. Special thanks to Matthias Wirth (*wiedehopf*) and the readsb contributors.
 - **[Lemaru — dwc2usb.device](https://github.com/LemaruX/dwc2usb.device)** — USB host controller driver for PiStorm/Emu68 on Raspberry Pi 3-family boards. Provides native access to the Raspberry Pi's DWC2 USB controller through the Poseidon USB stack, enabling direct communication with the RTL-SDR dongle. Essential to readsb-Amiga's USB hardware support on our tested configuration. Special thanks to **Lemaru (@LemaruX)** for making USB peripherals accessible to classic Amiga systems running Emu68.
