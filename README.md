@@ -139,7 +139,7 @@ The native executable is `dist/READSB_PORT39F1`. Copy that file to the Amiga. Th
 - **[dump1090](https://github.com/antirez/dump1090)** — Original work by Salvatore Sanfilippo, on which subsequent dump1090 and readsb developments are based.
 - **[MalcolmRobb/dump1090](https://github.com/MalcolmRobb/dump1090)** and **[FlightAware/dump1090](https://github.com/flightaware/dump1090)** — Important contributions to the evolution of Mode S/ADS-B decoding.
 - **[Osmocom rtl-sdr](https://github.com/osmocom/rtl-sdr)** — RTL2832U and Rafael R82xx tuner control code.
-- **Poseidon USB Stack** — Native AmigaOS USB infrastructure enabling direct access to RTL-SDR hardware.
+- **[Poseidon USB Stack](https://github.com/rondoval/neptune-usb-stack/releases/tag/v6.2)** — Native AmigaOS USB infrastructure enabling direct access to RTL-SDR hardware.
 - **[amiport](https://github.com/bdgscotland/amiport)** — POSIX compatibility infrastructure supporting native AmigaOS software ports.
 - **[PiStorm](https://github.com/captain-amygdala/pistorm)** and **[Emu68](https://github.com/michalsc/Emu68)** — Hardware and emulation technologies making this project practical on classic Amiga computers.
 
