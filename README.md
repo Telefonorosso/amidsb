@@ -6,19 +6,18 @@
 
 **Native ADS-B receiver for AmigaOS 68k, using an RTL-SDR dongle and Poseidon USB.**
 
-Receive and track aircraft directly in an AmigaOS console, **without Linux, ncurses, or an Internet connection**, or send decoded Mode S / ADS-B messages to another receiver over Beast TCP.
+Receive and track aircraft directly in an AmigaOS console or send decoded Mode S / ADS-B messages to another receiver over Beast TCP.
 
 ## Requirements
 
-- **AmigaOS 68k** with a sufficiently fast CPU. Hardware-tested on **Amiga 600 + PiStorm / Emu68 (Raspberry Pi 3A+)**.
+- **AmigaOS 68k** with a sufficiently fast CPU. Hardware-tested on **Amiga 600 + PiStorm / Emu68 (Raspberry Pi 3A+) / OS 3.1**.
 - **Poseidon 6.2** USB stack, properly installed and configured.
 - **`dwc2usb.device`** USB host controller driver for PiStorm.
 - **RTL-SDR USB dongle** based on RTL2832U and an R820T/R820T2-class tuner.
   - Hardware-validated: **Nooelec NESDR SMArt**, USB VID:PID `0BDA:2838`
   - The current backend requires these identifiers. Other dongles are not yet validated.
 - **1090 MHz ADS-B antenna** connected to the SDR dongle.
-- **TCP/IP stack with `bsdsocket.library`** for `RTLBEAST` only. Hardware-tested with MiamiDX. A working LAN connection is required to reach the Beast TCP server on port `30005`.
-- **Recommended AmigaDOS stack:** `262144` bytes (`Stack 262144` before launching the executable).
+- **TCP/IP stack with `bsdsocket.library`** only for RTLBEAST option.
 
 ## Install and run
 
@@ -53,11 +52,10 @@ Stack 262144
 AMIDSB RTLINTERACTIVE
 ```
 
-Receives and decodes ADS-B locally and displays a continuously updated aircraft table with ICAO addresses, callsigns, squawks, altitudes, speeds, headings, positions, RSSI, message counts, and `Seen` (seconds since the last received message).
+Receives and decodes ADS-B locally and displays a continuously updated aircraft table with ICAO addresses, callsigns, squawks, altitudes, speeds, headings, positions, RSSI, message counts, and SEEN (seconds since the last received message).
 
-- No ncurses or Linux companion computer required.
+- **Ctrl-C** stops reception.
 - No network stack required: **Beast TCP is disabled** in this mode.
-- Ordinary keypresses do not pause the display; **Ctrl-C** stops reception.
 - A valid latitude/longitude may take time to appear because the local tracker needs a suitable pair of airborne CPR messages.
 - Up to 128 aircraft are tracked internally; up to 20 rows are displayed at a time.
 
@@ -68,7 +66,7 @@ Stack 262144
 AMIDSB RTLBEAST
 ```
 
-Receives and decodes ADS-B, then serves binary Beast-format messages to **one TCP client** on **port 30005** (listens on `0.0.0.0`). This is a streaming mode, **not** the local interactive aircraft table.
+Receives and decodes ADS-B, then serves binary Beast-format messages to **one TCP client** on **port 30005** (listens on `0.0.0.0`).
 
 On a Linux machine running readsb, connect to the Amiga's LAN address:
 
@@ -76,7 +74,7 @@ On a Linux machine running readsb, connect to the Amiga's LAN address:
 readsb --net --net-only --net-connector=AMIGA_IP,30005,beast_in
 ```
 
-Replace `AMIGA_IP` with the Amiga's actual IP address. Start the Amiga's TCP/IP stack **before** launching `RTLBEAST`, and ensure TCP port 30005 is reachable from the Linux host.
+Start the Amiga's TCP/IP stack **before** launching `RTLBEAST` and ensure TCP port 30005 is reachable from the Linux host.
 
 The server does not require a username or password. **Use it on a trusted LAN; do not expose port 30005 directly to the Internet.** Press Ctrl-C to stop and close the listener.
 
@@ -103,21 +101,6 @@ AMIDSB RFSET GAIN=30
 | `GAIN=0` through `GAIN=49.6` | Manual gain accepted by the parser, in dB, with at most one decimal digit |
 
 The tuner driver maps a requested manual gain to its supported hardware settings; not every intermediate value is necessarily applied exactly. Use uppercase `GAIN=`. `GAIN=auto` also works.
-
-The original readsb DSP preamble threshold (**58**) remains unchanged in this release.
-
-## Build from source (Debian cross-compiler)
-
-The source package contains the Amiga port and build scripts. On a Debian machine with the existing `m68k-amigaos-gcc` toolchain, amiport library, Poseidon SDK, Osmocom R82xx tuner sources, and zlib/zstd target headers installed:
-
-```sh
-cd readsb-Amiga-PORT39-INTERACTIVE-FIX1
-./VERIFY_PORT39.sh
-./BUILD_PORT39.sh all
-ls -lh dist/READSB_PORT39F1
-```
-
-The native executable is `dist/READSB_PORT39F1`. Copy that file to the Amiga. The build uses **`-O2` for the upstream DSP modules**, preserving the hardware-validated AGC performance configuration. No previous PORTxx ZIP is required; development toolchain and SDK dependencies are installed separately.
 
 ## Quick troubleshooting
 
